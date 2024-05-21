@@ -6,13 +6,19 @@ services:
       dockerfile: Dockerfile.backend
     volumes:
       - ./data:/app/data
+    restart: unless-stopped
+    container_name: repototext-backend
     ports:
-      - 5000:5000
-    env_file:
-      - .env
+      - 5063:5000
+    environment:
+      - GITHUB_API_KEY='ghp_apitokenhere'
+      - REACT_APP_BACKEND_PORT=5063
+      - REACT_APP_BACKEND_DOMAIN=yourdomain/ip
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    container_name: repototext-frontend
     ports:
       - 3000:3000
