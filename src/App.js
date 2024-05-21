@@ -63,6 +63,10 @@ function App() {
   const [customFileType, setCustomFileType] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const backendDomain = process.env.REACT_APP_BACKEND_DOMAIN || 'localhost';
+  const backendPort = process.env.REACT_APP_BACKEND_PORT || '5000';
+  const scrapeUrl = `http://${backendDomain}:${backendPort}/scrape`;
+  
   const handleRepoChange = (e) => {
     setRepoUrl(e.target.value);
   };
@@ -101,7 +105,7 @@ function App() {
     }
 
     try {
-      const result = await axios.post('http://localhost:5000/scrape', {
+      const result = await axios.post(scrapeUrl, {
         repoUrl,
         docUrl,
         selectedFileTypes: fileTypesToSend,
